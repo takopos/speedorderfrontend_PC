@@ -10,8 +10,7 @@ import {
 	Toast
 } from 'vant';
 // 环境的切换
-
-axios.defaults.baseURL = 'http://35.236.184.115/';
+axios.defaults.baseURL = 'https://35.236.184.115/';
 // if ( process.env.NODE_ENV === 'production' ) {
 //   axios.defaults.baseURL = 'http://query.cdmeixiaoya.com/';
 // } else {
@@ -22,10 +21,8 @@ axios.defaults.baseURL = 'http://35.236.184.115/';
 //设置请求超时
 axios.defaults.timeout = 10000;
 
-
 //设置请求头  
 axios.defaults.headers.post['Content-Type'] = 'application/json;charset=UTF-8';
-
 //请求拦截
 // 先导入vuex,因为我们要使用到里面的状态对象
 // vuex的路径根据自己的路径去写
@@ -50,17 +47,14 @@ axios.interceptors.request.use(
 var that = this
 axios.interceptors.response.use(
 	response => {
+		console.log('response563',response)
 		// 如果返回的状态码为200，说明接口请求成功，可以正常拿到数据     
-		// 否则的话抛出错误
-		if (response.data.code === 200) {
+		// 否则的话抛出错误resCode
+		if (response.data.res === 1) {
+			console.log('1')
 			return Promise.resolve(response);
-		} else if (response.data.code == 401) {
-			window.location.hash = '/pages/login'
-			Toast.fail('请先登录！');
-		} else if (response.data.code == 400) {
-			Toast.fail(response.data.message);
 		} else {
-			Toast.fail('系统错误！');
+			Toast.fail('系統錯誤!');
 			return Promise.reject(response);
 		}
 	},
@@ -93,10 +87,11 @@ export function get(url, params) {
  * post方法，对应post请求 
  * @param {String} url [请求的url地址] 
  * @param {Object} params [请求时携带的参数] 
+ * QS.stringify(params)
  */
 export function post(url, params) {
 	return new Promise((resolve, reject) => {
-		axios.post(url, QS.stringify(params))
+		axios.post(url, params)
 			.then(res => {
 				resolve(res.data);
 			})

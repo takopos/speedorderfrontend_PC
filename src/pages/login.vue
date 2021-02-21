@@ -13,27 +13,21 @@
       </div>
       <el-button type="primary" round @click="loginClick()">登錄</el-button>
       <div class="forget">
-        <router-link to="forgetPassWord">
-          <p>忘記密碼</p>
-        </router-link>
-        <router-link to="register">
-          <p>沒有帳號嗎?註冊</p>
-        </router-link>
+        <router-link to="forgetPassWord"><p>忘記密碼</p></router-link>
+        <router-link to="register"><p>沒有帳號嗎?註冊</p></router-link>
       </div>
       <div class="lineWrap">
         <p class="leftLine"></p>
         <p class="otherLoginWay">其他登錄方式</p>
         <p class="rightLine"></p>
       </div>
-      <div class="lineLoginWay">
-        <el-button type="primary" round>LINE</el-button>
-      </div>
+      <div class="lineLoginWay"><el-button type="primary" round>LINE</el-button></div>
     </div>
   </div>
 </template>
 
 <script>
-import axios from 'axios'
+import axios from "axios";
 import { apiLogin } from "@/request/api"; // api接口
 export default {
   name: "App",
@@ -41,7 +35,7 @@ export default {
     return {
       countNum: "", //账号
       passWord: "", //密码
-      host: this.$host, //服务器地址
+      host: this.$hostName, //服务器地址
     };
   },
   mounted() {
@@ -52,20 +46,32 @@ export default {
   },
   methods: {
     loginClick() {
-        this.$router.push('/')
-        return
-      this.$api
-        .apiLogin({
-          code: this.countNum,
-          pwd: this.passWord,
-          type: 0,
-          device: 3,
-        })
+      this.$router.push("/pages/index");
+      return
+      if (!this.countNum || !this.passWord) {
+        this.$message.error("賬戶或密碼不能爲空!");
+        return;
+      }
+      axios.post(
+          this.$hostName + "/SpeedOrderService/api_app/login",
+          {
+            code: this.countNum,
+            pwd: this.passWord,
+            type: 0,
+            device: 3,
+          },
+          {
+            headers: {
+              "Content-Type": "application/json;charset=UTF-8",
+            },
+          }
+        )
         .then((res) => {
-          // console.log("登录", res);
-          // localStorage.setItem('userName', this.countNum)
-					// localStorage.setItem('passWord', this.passWord)
-					// this.$router.push('/')
+          if (res.data.res == 1) {
+            this.$router.push("/pages/index");
+          } else {
+            this.$message.error("登入錯誤,請檢查賬戶或密碼!");
+          }
         });
     },
   },

@@ -11,18 +11,17 @@ module.exports = {
 		assetsSubDirectory: 'static',
 		assetsPublicPath: '/',
 		proxyTable: {
-			'/api': {
-				target: 'http://35.236.184.115', //这是跨域目标域名
-				changeOrigin: true,
-				pathRewrite: {
-					'^/api': ''
-				},
-				secure: false 
-			} 
+			// '/api': {
+			// 	target: 'http://10958fd32282.ngrok.io/', //这是跨域目标域名
+			// 	changeOrigin: true,
+			// 	pathRewrite: {
+			// 		'^/api': ''
+			// 	}
+			// } 
 		},
 
 		// Various Dev Server settings
-		host: 'localhost', // can be overwritten by process.env.HOST 0.0.0.0  localhost
+		host: 'localhost', // can be overwritten by process.env.HOST  0.0.0.0
 		port: 8080, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
 		autoOpenBrowser: false,
 		errorOverlay: true,

@@ -4,8 +4,9 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 
-import * as api from '@/request/api.js'
-Vue.prototype.$api = api 
+// import Api from './api/index.js';
+// Vue.prototype.$api = Api;
+
 
 //引入elementUI:
 import ElementUI from 'element-ui';
@@ -27,7 +28,7 @@ Vue.config.productionTip = false
 
 
 //服务器域名地址：
-Vue.prototype.$host = "35.236.184.115"
+Vue.prototype.$hostName = "http://35.236.184.115"
 
 /* eslint-disable no-new */
 new Vue({

@@ -1,14 +1,13 @@
 import axios from 'axios';
 
 let http = axios.create({
-	baseURL: 'http://35.236.184.115',
-	withCredentials: false,
+	baseURL: 'http://35.236.184.115:8080',
+	withCredentials: true,
 	headers: {
-		'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
+		'Content-Type': 'application/json;charset=UTF-8'
 	},
 	transformRequest: [function(data) {
 		let newData = '';
-		console.log('data',data)
 		for (let k in data) {
 			if (data.hasOwnProperty(k) === true) {
 				newData += encodeURIComponent(k) + '=' + encodeURIComponent(data[k]) + '&';
